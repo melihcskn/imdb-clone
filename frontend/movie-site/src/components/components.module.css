@@ -1,0 +1,83 @@
+.dropdown {
+  display: inline-block;
+  position: relative;
+  z-index: 999;
+}
+
+.dd__button {
+  top: 0;
+  bottom: 0;
+  border: none;
+  color: white;
+  cursor: pointer;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center !important;
+  width: fit-content;
+  min-width: 4rem;
+  padding-left: 0.5rem;
+}
+
+.dd__button:after {
+  content: '';
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid white;
+  margin-left: 0.5rem;
+  margin-right: 0.2rem;
+}
+
+.dd__input {
+  display: none;
+}
+
+.dd__menu {
+  position: absolute;
+  top: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0;
+  margin: 2px 0 0 0;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+  background-color: #1f1f1f;
+  list-style-type: none;
+}
+
+.dd__menu li {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dd__input + .dd__menu {
+  display: none;
+}
+
+.dd__input:checked + .dd__menu {
+  display: block;
+}
+
+.dd__menu li {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dd__menu li.divider {
+  padding: 0;
+  border-bottom: 1px solid #cccccc;
+}
+
+.dd__menu__button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: #1f1f1f;
+  color: white;
+  border: none;
+  text-decoration: none;
+}
+
+.dd__menu__button:hover {
+  background-color: rgba(120, 120, 120, 0.1);
+}

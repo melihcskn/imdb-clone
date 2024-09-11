@@ -1,0 +1,132 @@
+:root {
+  --rating-text-color: #b5b5b5;
+  --custom-font-family: Roboto, Helvetica, Arial, sans-serif;
+  --custom-hover-color: rgb(40, 40, 40);
+  --custom-gallery-background-color: #303131;
+  --custom-genre-border-color: #7e7e7e;
+  --custom-genre-border-padding: 0.15rem 0.75rem;
+  --custom-genre-border-radius: 1rem;
+  --custom-genre-border: 1px solid white;
+  --custom-rating-icon-padding: 0 0.75rem;
+  --custom-rating-icon-radius: 0.25rem;
+  --custom-title-header-font-size: 3rem;
+  --custom-title-header-line-height: 3.125rem;
+}
+
+.title__header--left {
+  font-size: var(--custom-title-header-font-size);
+  line-height: var(--custom-title-header-line-height);
+}
+
+.title__header--bottom {
+  font-family: var(--custom-font-family);
+  color: var(--rating-text-color);
+  font-weight: bold;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.title__header--bottom a {
+  text-decoration: none;
+  color: var(--rating-text-color);
+}
+
+.title__header--bottom a:hover {
+  text-decoration: underline;
+}
+
+.title {
+  margin-right: 1rem;
+  text-align: center;
+}
+
+.imdb__rating__text {
+  font-size: 0.75rem;
+  color: var(--rating-text-color);
+  font-family: var(--custom-font-family);
+  letter-spacing: 0.1rem;
+  font-weight: bold;
+}
+
+.imdb__rating__icon {
+  background-color: transparent;
+  display: flex;
+  text-decoration: none;
+}
+
+.imdb__rating__icon :hover {
+  background-color: var(--custom-hover-color);
+}
+
+.imdb__rating__icon > span {
+  display: flex;
+  align-items: center;
+  padding: var(--custom-rating-icon-padding);
+  border-radius: var(--custom-rating-icon-radius);
+}
+
+.imdb__rating {
+  margin-left: 0.75rem;
+}
+
+.imdb__rating span {
+  display: flex;
+}
+
+.imdb__rating p {
+  margin: 0px;
+  line-height: 1.2rem;
+}
+
+.imdb__rating__score {
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
+}
+
+.imdb__rating__max {
+  font-family: var(--custom-font-family);
+  color: var(--rating-text-color);
+}
+
+.imdb__rating__number {
+  color: var(--rating-text-color);
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+.imdb__gallery {
+  display: grid;
+  row-gap: 4px;
+  grid-template-columns: auto;
+  text-align: center;
+}
+
+.imdb__gallery > a {
+  text-decoration: none;
+  color: white;
+}
+
+.imdb__gallery__box {
+  align-content: center;
+  background-color: var(--custom-gallery-background-color);
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+}
+
+.imdb__gallery__box:hover {
+  background-color: #4a4b4b;
+}
+
+.imdb__genre {
+  border: var(--custom-genre-border);
+  border-radius: var(--custom-genre-border-radius);
+  border-color: var(--custom-genre-border-color);
+  padding: var(--custom-genre-border-padding);
+}
+
+.imdb__genre > a {
+  text-decoration: none;
+  color: white;
+  font-weight: 300;
+}

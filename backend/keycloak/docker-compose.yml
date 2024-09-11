@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16.2
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    networks:
+      - keycloak_network
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.6
+    container_name: ${KEYCLOAK_CONTAINER_NAME}
+    command: start-dev --import-realm --http-port=8888
+    environment:
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KK_TO_RMQ_PORT: 5672
+      KK_TO_RMQ_VHOST: /
+      KK_TO_RMQ_URL: rabbitmq
+      KK_TO_RMQ_EXCHANGE: amq.topic
+      KK_TO_RMQ_USERNAME: guest
+      KK_TO_RMQ_PASSWORD: guest
+    ports:
+      - 8888:8888
+    restart: always
+    depends_on:
+      - postgres
+    networks:
+      - keycloak_network
+      - rabbitmq_rabbitmq_network
+    volumes:
+      - keycloak_data:/data
+      - ./keycloak-data/:/opt/keycloak/data/import
+      - ./keycloak-to-rabbit-3.0.5.jar:/opt/keycloak/providers/keycloak-to-rabbit-3.0.5.jar
+
+volumes:
+  postgres_data:
+  keycloak_data:
+  pgadmin_data:
+  rabbitmq_data:
+
+networks:
+  keycloak_network:
+  rabbitmq_rabbitmq_network:
+    driver: bridge
+    external: true

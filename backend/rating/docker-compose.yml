@@ -1,0 +1,19 @@
+services:
+
+  spring-boot:
+    image: melihcskn/review
+    container_name: review
+    ports:
+      - "8086:8086"
+    networks:
+      - rabbitmq_rabbitmq_network
+    environment:
+      - server.port=8086
+      - spring.rabbitmq.host=rabbitmq
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8888/realms/imdb
+      - spring.security.oauth2.resourceserver.jwt.jwk-set-uri=http://keycloak:8888/realms/imdb/protocol/openid-connect/certs
+    restart: always
+
+networks:
+  rabbitmq_rabbitmq_network:
+    external: true

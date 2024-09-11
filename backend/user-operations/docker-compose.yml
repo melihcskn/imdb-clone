@@ -1,0 +1,58 @@
+services:
+  mariaDB:
+    image: mariadb
+    restart: always
+    container_name: mariaDB
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=user
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=userpassword
+      - MYSQL_DATABASE=user
+    ports:
+      - '3307:3306'
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - mariadb_network
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8088:80
+    environment:
+      - PMA_HOST=mariaDB
+    depends_on:
+      - mariaDB
+    networks:
+      - mariadb_network
+
+  spring-boot:
+    image: melihcskn/user-operations
+    container_name: userOperation
+    ports:
+      - '8084:8084'
+    networks:
+      - mariadb_network
+      - rabbitmq_rabbitmq_network
+    depends_on:
+      - mariaDB
+    environment:
+      - spring.datasource.url=jdbc:mariadb://mariaDB:3306/user
+      - server.port=8084
+      - KEYCLOAK_TOKEN_URL=http://keycloak:8888/realms/master/protocol/openid-connect/token
+      - KEYCLOAK_LOGIN_URL=http://keycloak:8888/realms/imdb/protocol/openid-connect/token
+      - KEYCLOAK_REGISTER_URL=http://keycloak:8888/admin/realms/imdb/users
+      - spring.jpa.hibernate.ddl-auto=update
+      - spring.rabbitmq.host=rabbitmq
+    restart: always
+
+volumes:
+  mariadb_data:
+
+networks:
+  mariadb_network:
+  rabbitmq_rabbitmq_network:
+    driver: bridge
+    external: true

@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+
+  mariaDB:
+    image: mariadb
+    restart: always
+    container_name: mariaDB
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=user
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=userpassword
+      - MYSQL_DATABASE=user
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - mariadb_network
+
+  adminer:
+    image: adminer
+    restart: always
+    container_name: adminer
+    environment:
+      - ADMINER_DEFAULT_SERVER=mariaDB
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mariaDB
+    networks:
+      - mariadb_network
+
+  spring-boot:
+    image: melihcskn/user-register
+    container_name: userRegister
+    ports:
+      - "8084:8084"
+    networks:
+      - mariadb_network
+    depends_on:
+      - mariaDB
+    environment:
+      - spring.datasource.url=jdbc:mariadb://mariaDB:3306/user
+      - server.port=8084
+      - KEYCLOAK_TOKEN_URL=http://keycloak:8080/realms/master/protocol/openid-connect/token
+      - KEYCLOAK_LOGIN_URL=http://keycloak:8080/realms/imdb/protocol/openid-connect/token
+      - KEYCLOAK_REGISTER_URL=http://keycloak:8080/admin/realms/imdb/users
+    restart: always
+  
+
+volumes:
+  mariadb_data:
+
+networks:
+  mariadb_network:
+      
