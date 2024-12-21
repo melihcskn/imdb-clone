@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "jsx":"preserve",
+        "module":"commonjs",
+        "lib": ["es2023","dom"],
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "baseUrl": "./src",
+        "paths": {
+        "@/*": ["./*"],
+      }
+    },
+    "include": ["src/**/*.ts","src/**/*.tsx"],
+    "exclude": ["**/*.spec.ts"],
+  }
+  
