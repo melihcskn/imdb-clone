@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -110,4 +111,27 @@ public class UserServiceImpl implements UserService {
         return new ResponseEntity<>("Server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @Override
+    public void deleteKeycloakUser(String keycloakUserId) {
+        User user = userRepository.findUserByKeycloakId(keycloakUserId);
+        if(user != null) {
+            System.out.println("Deleting keycloak user " + keycloakUserId);
+        }
+    }
+
+    @Override
+    public void createKeycloakUser(Map<String,Object> keycloakUserInfo) {
+        User user = new User();
+        user.setKeycloakId(keycloakUserInfo.get("keycloakId").toString());
+        user.setEmail(keycloakUserInfo.get("email").toString());
+        user.setUsername(keycloakUserInfo.get("username").toString());
+        user.setFirstName(keycloakUserInfo.get("firstName").toString());
+        user.setLastName(keycloakUserInfo.get("lastName").toString());
+
+        try {
+            userRepository.save(user);
+        } catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }

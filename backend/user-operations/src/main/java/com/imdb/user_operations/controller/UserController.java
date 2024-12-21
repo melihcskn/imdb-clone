@@ -19,6 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @RequestMapping(path = "/register",method = RequestMethod.POST)
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest user) {
         try {
